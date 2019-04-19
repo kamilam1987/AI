@@ -58,6 +58,10 @@ public class GameView extends JPanel implements ActionListener{
 		this.p = p;
 	}
 
+	public Player getPlayer() {
+		return p;
+	}
+
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
@@ -117,6 +121,5 @@ public class GameView extends JPanel implements ActionListener{
 	public void setSprites(Sprite[] sprites){
 		this.sprites = sprites;
 	}
-	
-	
+
 }

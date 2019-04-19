@@ -16,6 +16,7 @@ public class Spider {
 	private Node maze;
 	private LinkedList<Node> path = new LinkedList<Node>();
 
+	// Spider constructor
 	public Spider(double health, double anger, ControlledSprite player, Node maze) {
 		this.health = health;
 		this.anger = anger;
@@ -23,6 +24,7 @@ public class Spider {
 		this.maze = maze;
 	}
 
+	// Gets spider anger level and weapon
 	public void fight(double angerLevel, double weapon) {
 		nnfight = new CharacterNn();
 		try {
@@ -31,6 +33,7 @@ public class Spider {
 		}
 	}
 
+	// Use path to track the spider for Heuristic search
 	public void setPath(LinkedList<Node>path) {
 		this.path = path;
 	}
@@ -50,17 +53,6 @@ public class Spider {
 		this.anger = anger;
 	}
 
-//	public void run() {
-//
-//		while (this.isAlive()) {
-//			try { // Slow down the thread to give the spider time to move/think
-//				Thread.sleep(1000);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//			
-//		}
-//	}
 	public boolean isAlive()
 	{
 		if(health > 0)

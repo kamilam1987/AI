@@ -7,7 +7,7 @@ public class CharacterNn {
 
 private static NeuralNetwork nn;
 	
-	private static double[][] data = { //Health, Sword, Anger
+	private static double[][] data = { //Health, Sword, Enemies
 			{ 2, 0, 0 }, { 2, 1, 0 }, { 2, 0, 1 }, { 2, 1, 1 }, { 2, 1, 2 }, { 2, 0, 2 },
 			{ 1, 0, 0 }, { 1, 1, 0 }, { 1, 0, 1 }, { 1, 1, 1 }, { 1, 1, 2 }, { 1, 0, 2 }, 
 			{ 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 }, { 0, 1, 1 }, { 0, 1, 2 }, { 0, 0, 2 }};
@@ -27,8 +27,8 @@ private static NeuralNetwork nn;
 		
 	}
 	
-	public int action(double health, double sword, double anger){
-		double[] params = {health, sword, anger};
+	public int action(double health, double sword, double enemies){
+		double[] params = {health, sword, enemies};
 		double[] result = null;
 		try {
 			result = nn.process(params);

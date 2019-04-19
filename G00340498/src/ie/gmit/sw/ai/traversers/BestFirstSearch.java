@@ -47,7 +47,7 @@ public class BestFirstSearch implements Traversator{
 				for (int i = 0; i < children.length; i++) {
 					//for (int i = children.length - 1; i >= 0; i--) {			
 					if ((children[i].getRow() <= maze.length - 1) && (children[i].getCol() <= maze[children[i].getRow()].length - 1)
-							&& ((children[i].getType() == 10))){
+							&& ((children[i].getType() == 5))){
 						children[i].setParent(node);
 						queue.addLast(children[i]);	
 					}
