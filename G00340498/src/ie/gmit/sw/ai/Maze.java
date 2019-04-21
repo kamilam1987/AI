@@ -6,21 +6,26 @@ import ie.gmit.sw.ai.fuzzy.FuzzySpider;
 import ie.gmit.sw.ai.nn.CharacterNn;
 import ie.gmit.sw.ai.traversers.Node;
 
+/*
+ * Maze class, is used to implement a spiders, player and other objects a game.
+ */
 public class Maze {
-	// first
+
+	// Declare variables
 	private Node[][] maze; // An array does not lend itself to the type of mazge generation alogs we use in
 							// the labs. There are no "walls" to carve...
-	// Sets in fuzzifier use to run the while loop in runnable
+	// Sets in in fuzzy spider class use to run the while loop in runnable.
 	private Object lock = new Object();
+	// automatically provides a pool of threads .
 	private ExecutorService executor = Executors.newFixedThreadPool(50);
-	// Player class
+	// Object of player from player class.
 	private Player p;
-	// Initlialise the neural network class and train the neural network
-	private CharacterNn f;
+	// Initialize the neural network class and train the neural network
+	private CharacterNn n;
 
-	public Maze(int dimension, CharacterNn nfight) {
+	public Maze(int dimension, CharacterNn characterNn) {
 		// Initialise
-		this.f = nfight;
+		this.n = characterNn;
 
 		// Sets maze to node
 		maze = new Node[dimension][dimension];
@@ -43,13 +48,13 @@ public class Maze {
 
 		// Declared spiders
 		addFeature(6, -1, featureNumber); // 6 is a Black Spider, 0 is a hedge
-		addFeature(7, -1, featureNumber); //7 is a Blue Spider, 0 is a hedge
-		addFeature(8, -1, featureNumber); //8 is a Brown Spider, 0 is a hedge
-		addFeature(9, -1, featureNumber); //9 is a Green Spider, 0 is a hedge
-		//addFeature(10, -1, featureNumber); //: is a Grey Spider, 0 is a hedge
-		//addFeature(11, -1, featureNumber); //; is a Orange Spider, 0 is a hedge
-		//addFeature(12, -1, featureNumber); // < is a Red Spider, 0 is a hedge
-		//addFeature(13, -1, featureNumber); // = is a Yellow Spider, 0 is a hedge
+		addFeature(7, -1, featureNumber); // 7 is a Blue Spider, 0 is a hedge
+		addFeature(8, -1, featureNumber); // 8 is a Brown Spider, 0 is a hedge
+		addFeature(9, -1, featureNumber); // 9 is a Green Spider, 0 is a hedge
+		// addFeature(10, -1, featureNumber); //: is a Grey Spider, 0 is a hedge
+		// addFeature(11, -1, featureNumber); //; is a Orange Spider, 0 is a hedge
+		// addFeature(12, -1, featureNumber); // < is a Red Spider, 0 is a hedge
+		// addFeature(13, -1, featureNumber); // = is a Yellow Spider, 0 is a hedge
 	}
 
 	private void init() {
@@ -61,11 +66,11 @@ public class Maze {
 		}
 	}
 
-	// Changed that takes integers instead of character
+	// In addFeature function feature was change from character to integer.
 	private void addFeature(int feature, int replace, int number) {
 
 		int counter = 0;
-		// this will draw the amount of spiders and hedges
+		// Draws the amount of spiders and hedges
 		while (counter < number) { // Keep looping until feature number of items have been added
 			int row = (int) (maze.length * Math.random());
 			int col = (int) (maze[0].length * Math.random());
@@ -74,11 +79,11 @@ public class Maze {
 
 				// Sends spiders and player to thread pool class
 				if (feature > 5 && feature < 14) {
-					FuzzySpider f = new FuzzySpider(row, col, feature, lock, maze, p, this.f);
+					FuzzySpider f = new FuzzySpider(row, col, feature, lock, maze, p, this.n);
 					// Execute thread
 					executor.execute(f);
 				}
-				// Changes its type to the name of a spider
+				// Changes its type to the name of a spider.
 				maze[row][col].setType(feature);
 				counter++;
 			}
@@ -93,11 +98,9 @@ public class Maze {
 				if (isRoom(row, col))
 					continue;
 				if (num > 5 && col + 1 < maze[row].length - 1) {
-					// maze[row][col + 1] = '\u0020'; //\u0020 = 0x20 = 32 (base 10) = SPACE
 					// Space is set to type of -1
 					maze[row][col + 1].setType(-1);
 				} else {
-//					if (row + 1 < maze.length - 1) maze[row + 1][col] = '\u0020';
 					if (row + 1 < maze.length - 1)
 						maze[row + 1][col].setType(-1);
 				}
@@ -110,13 +113,13 @@ public class Maze {
 		// Checks if player exist
 		boolean placed = false;
 		while (!placed) {
-			// Gets random row and col values
+			// Gets random row and column values
 			int row = (int) (maze.length * Math.random());
 			int col = (int) (maze[0].length * Math.random());
 
-			// If row and col values are not -1 means its not empty and don't place it
+			// If row and column values are not -1 means its not empty and don't place it
 			if (maze[row][col].getType() == replace) {
-				// If row and col values are empty then place the player
+				// If row and column values are empty then place the player
 				p = new Player(row, col, feature, maze);
 				maze[row][col] = p;
 				placed = true;
@@ -133,10 +136,12 @@ public class Maze {
 		return this.maze;
 	}
 
+	// Gets number of rows and columns
 	public Node get(int row, int col) {
 		return this.maze[row][col];
 	}
 
+	// Sets Node to number of columns and rows
 	public void set(int row, int col, Node node) {
 		node.setCol(col);
 		node.setRow(row);
@@ -144,14 +149,17 @@ public class Maze {
 		this.maze[row][col] = node;
 	}
 
+	// Size of the maze
 	public int size() {
 		return this.maze.length;
 	}
 
+	// Gets player object
 	public Player getP() {
 		return this.p;
 	}
 
+	// Sets player object to the position on maze
 	public void setP(int row, int col) {
 		this.maze[row][col] = this.p;
 		this.p.setRow(row);

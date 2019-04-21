@@ -20,15 +20,15 @@ public class Game implements KeyListener {
 	private int currentRow;
 	private int currentCol;
 	public int attack;
-	private CharacterNn nfight = new CharacterNn();
+	private CharacterNn characterNn = new CharacterNn();
 
 	public Game() throws Exception {
 
 		// Train neural network and sends to it and send to fuzzifier
-		nfight.train();
+		characterNn.train();
 
 		// Sets Maze with fuzzy logic for fight
-		model = new Maze(MAZE_DIMENSION, nfight);
+		model = new Maze(MAZE_DIMENSION, characterNn);
 		view = new GameView(model);
 
 		// Gets sprites
@@ -116,17 +116,15 @@ public class Game implements KeyListener {
 			model.set(currentRow, currentCol, model.get(row, col));
 			model.set(row, col, model.getP());
 			return true;
-		}
-		else if (player.getPlayerHealth() <=0) {
+		} else if (player.getPlayerHealth() <= 0) {
 			gameOver(true);
 			return true;
-		}
-		else {
+		} else {
 			return false; // Can't move
 		}
 	}
 
-	// Sets game over if player health is less then zero
+	// Sets game over if player health is less then zero.
 	public static void gameOver(boolean isAlive) {
 		GAME_OVER = true;
 
@@ -134,7 +132,7 @@ public class Game implements KeyListener {
 			// show player dead message
 			GameOverJOptionPane.display("Player Died! Game Over!");
 
-		} else { 
+		} else {
 			// Won game, display message
 			GameOverJOptionPane.display("Boss Defeated! Game Over!");
 		} // if
@@ -162,8 +160,8 @@ public class Game implements KeyListener {
 		sprites[3] = new Sprite(0, "Bomb", 1, "resources/images/objects/bomb.png");
 		sprites[4] = new Sprite(0, "Hydrogen Bomb", 1, "resources/images/objects/h_bomb.png");
 		sprites[5] = player;
-		
-		// Sets angry level for spiders
+
+		// First value sets angry level for spiders.
 		sprites[6] = new Sprite(70, "Black Spider", 2, "resources/images/spiders/black_spider_1.png",
 				"resources/images/spiders/black_spider_2.png");
 		sprites[7] = new Sprite(60, "Blue Spider", 2, "resources/images/spiders/blue_spider_1.png",

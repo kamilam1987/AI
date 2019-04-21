@@ -8,7 +8,7 @@ FUNCTION_BLOCK engage	// Block definition (there may be more than one block per 
 	
 	// Define output variable
 	VAR_OUTPUT				
-		risk : REAL;
+		danger : REAL;
 	END_VAR
 	
 	FUZZIFY weapon
@@ -24,7 +24,7 @@ FUNCTION_BLOCK engage	// Block definition (there may be more than one block per 
 	END_FUZZIFY
 	
 	
-	DEFUZZIFY risk
+	DEFUZZIFY danger
 	 TERM low := (0, 1) (20, 1) (40, 0);
 	 TERM medium := trian 40 60 70;
 	 TERM high := (60, 0) (80, 1) (100, 1);
@@ -36,9 +36,9 @@ FUNCTION_BLOCK engage	// Block definition (there may be more than one block per 
 	 AND : MIN;
 	 ACT : MIN;
 	 ACCU : MAX;
-	 RULE 1 : IF weapon IS light OR enemy IS weak THEN risk IS low;
-	 RULE 2 : IF weapon IS medium AND enemy IS strong THEN risk IS medium;
-	 RULE 3 : IF weapon IS deadly AND enemy IS formidable THEN risk IS high;
+	 RULE 1 : IF weapon IS light OR enemy IS weak THEN danger IS low;
+	 RULE 2 : IF weapon IS medium AND enemy IS strong THEN danger IS medium;
+	 RULE 3 : IF weapon IS deadly AND enemy IS formidable THEN danger IS high;
 	END_RULEBLOCK
 
 END_FUNCTION_BLOCK

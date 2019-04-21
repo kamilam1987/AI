@@ -1,18 +1,28 @@
 package ie.gmit.sw.ai;
 
-public class ControlledSprite extends Sprite{
-	private double playerHealth;
-	private boolean isAlive;
+/*
+ * ControlledSprite class extends Sprite class, and is used to track player health.
+ * Checks if the player is alive.
+ */
+public class ControlledSprite extends Sprite {
 
-	public ControlledSprite(int anger, String name, int frames, double playerHealth, String... images) throws Exception {
+	// Declare variables
+	private double playerHealth; // Player health amount
+	private boolean isAlive; // Checks if player is alive
+
+	// Controller passes spider anger value, sprite name, number of frames, player
+	// health amount and sprite image.
+	public ControlledSprite(int anger, String name, int frames, double playerHealth, String... images)
+			throws Exception {
 		super(anger, name, frames, images);
 		this.playerHealth = playerHealth;
 	}
-	
+
 	public ControlledSprite() {
 		super();
 	}
-	
+
+	// Setters and getters for player heath.
 	public double getPlayerHealth() {
 		return playerHealth;
 	}
@@ -21,6 +31,7 @@ public class ControlledSprite extends Sprite{
 		this.playerHealth = playerHealth;
 	}
 
+	// Sets direction to controls sprite movements.
 	public void setDirection(Direction d) {
 		switch (d.getOrientation()) {
 		case 0:
@@ -37,10 +48,11 @@ public class ControlledSprite extends Sprite{
 		}
 	}
 
+	// Checks if player is alive by checking if his health value is greater then 0.
 	public boolean isAlive() {
-		if(playerHealth > 0) 
+		if (playerHealth > 0)
 			return true;
-		else 
+		else
 			return false;
 	}
 

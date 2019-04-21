@@ -6,17 +6,23 @@ import ie.gmit.sw.ai.nn.CharacterNn;
 import ie.gmit.sw.ai.traversers.Node;
 import ie.gmit.sw.ai.traversers.Traversator;
 
+/* Spider class is used to set spider health, anger level which has different value for each enemy. Also uses path 
+ * to track the spider for Heuristic search. CharacterNn object is passed to the spider class to be 
+ * able implement a neural network.
+ */
 public class Spider {
 
-	private double health;
-	private double anger;
-	private CharacterNn nnfight;
-	private ControlledSprite player;
-	private int result;
-	private Node maze;
-	private LinkedList<Node> path = new LinkedList<Node>();
+	// Declare variables
+	private double health = 100; // Spider health amount.
+	private double anger; // Spider anger amount.
+	private CharacterNn characterNn; // Object for characterNn neural network.
+	private ControlledSprite player; // Object for player.
+	private int result; // Result for neural network.
+	private Node maze; // Object for maze.
+	private LinkedList<Node> path = new LinkedList<Node>(); // Path for heuristic search.
 
-	// Spider constructor
+	// Spider constructor which passes enemy health value, anger value player and
+	// maze object.
 	public Spider(double health, double anger, ControlledSprite player, Node maze) {
 		this.health = health;
 		this.anger = anger;
@@ -24,19 +30,23 @@ public class Spider {
 		this.maze = maze;
 	}
 
-	// Gets spider anger level and weapon
-	public void fight(double angerLevel, double weapon) {
-		nnfight = new CharacterNn();
+	// Gets spider anger value and weapon.
+	public void engage(double enemies, double weapon) {
+
+		// Creates a new object of characterNn;
+		characterNn = new CharacterNn();
 		try {
-			result = nnfight.action(0, 0, 0);
+			result = characterNn.action(0, 0, 0);
 		} catch (Exception e) {
 		}
 	}
 
 	// Use path to track the spider for Heuristic search
-	public void setPath(LinkedList<Node>path) {
+	public void setPath(LinkedList<Node> path) {
 		this.path = path;
 	}
+
+	// Setter and getter for spider health.
 	public double getHealth() {
 		return health;
 	}
@@ -45,6 +55,7 @@ public class Spider {
 		this.health = health;
 	}
 
+	// Getter and setter for anger value.
 	public double getAnger() {
 		return anger;
 	}
@@ -53,11 +64,11 @@ public class Spider {
 		this.anger = anger;
 	}
 
-	public boolean isAlive()
-	{
-		if(health > 0)
+	// Checks if spider is alive.
+	public boolean isAlive() {
+		if (health > 0)
 			return true;
-		else 
+		else
 			return false;
 	}
 

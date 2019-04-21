@@ -1,6 +1,10 @@
 package ie.gmit.sw.ai.traversers;
 
 import java.awt.Color;
+
+/*
+ * Node class is used to create a new Node with paths, directions and other methods
+ */
 public class Node {
 	public enum Direction {North, South, East, West};
 	private Node parent;
